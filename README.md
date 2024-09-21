@@ -2,44 +2,54 @@
 
 ## Overview
 
-Vision Verse is an AI-powered project that bridges the gap between visual imagery and poetic expression. Using ImageNet images as input and a transformer-based model trained on Gutenberg poetry, the system generates poems that reflect the mood, content, or theme of a given photograph. The project combines deep learning techniques from natural language processing (NLP) and computer vision to create artistic text outputs based on visual stimuli.
+Vision Verse is an innovative AI project that generates poetry from visual images by using a combination of transformer-based models. Specifically, the project employs a Vision Transformer (ViT) as the encoder and GPT-2 as the decoder. By fine-tuning these models on both image datasets (Flickr30k) and text-based datasets (Project Gutenberg poetry), the system is capable of generating creative poetic descriptions from photographs.
 
 ## Features
 
-Image-to-Poetry Translation: Vision Verse takes an image as input and generates a poetic description, drawing inspiration from a vast corpus of poetry.
+Image-to-Poetry Generation: Vision Verse interprets an image and creates a unique poem that encapsulates the scene, mood, or theme of the visual input.
 
-Transformer-Based Language Model: The project leverages a transformer architecture trained on Gutenberg poetry to produce meaningful and stylistic poetry.
+Transformer-Based Architecture: The system combines a Vision Transformer (ViT) for image feature extraction and GPT-2 for poetry generation.
 
-Customizable Poem Length: The user can define how many words the generated poem should have.
-
-Semantic Coherence: The generated poetry reflects the content or emotion of the input image.
+Flexible and Dynamic Output: The user can customize the number of words or lines in the generated poem, creating personalized outputs based on the input image.
 
 ## Objectives
 
-The primary objective of Vision Verse is to explore the synergy between computer vision and natural language generation. By using AI to interpret visual data and convert it into poetic expressions, this project aims to enhance creative processes and offer new forms of artistic interpretation.
+Vision Verse aims to demonstrate the power of AI in bridging the gap between vision and language. The project showcases how deep learning can be used creatively to interpret visual data and convert it into artistic forms of expression like poetry.
 
 ## Project Components
-### 1. Poetry Model Training
+### 1. Model Architecture
 
-The core model of Vision Verse is trained using a collection of poetry from the Gutenberg archive. This text corpus is used to train a sequential LSTM (Long Short-Term Memory) model that learns the structures and styles of poetic language.
+Encoder: Vision Transformer (ViT) - A powerful model for extracting visual features from images.
 
-Text Preprocessing: Poetry lines are tokenized and sequences of words are transformed into padded sequences to feed into the model.
+Decoder: GPT-2 - A pre-trained language model that generates coherent and stylistic poetry based on the visual input.
 
-Model Architecture: The model consists of multiple layers including embedding, bidirectional LSTM, and dense layers with a softmax output to predict the next word in the sequence.
+Feature Extractor: ViTFeatureExtractor is used to transform images into feature vectors, capturing the necessary visual information.
 
-Training: The model is trained using Gutenberg poetry, and early stopping and model checkpoints are applied to optimize performance.
+Tokenizer: GPT-2 is tokenized using the AutoTokenizer from Hugging Face, converting text into numerical sequences for processing.
 
-### 2. Image Description to Poetic Generation
+### 2. Datasets
 
-After training the model on poetic text, the next step is to convert image descriptions into poetic verses:
+Flickr30k: A widely-used image dataset consisting of 31,783 images. Each image is accompanied by five human-annotated descriptive captions, capturing a wide range of everyday activities and scenes.
 
-Text Generation: Using a seed text (typically an image description), the model generates a poetic response. This is done by predicting the next word in a sequence iteratively, thus generating coherent and stylistically appropriate poetry.
+Project Gutenberg Poetry Dataset: Contains 3,085,117 lines of poetry from hundreds of books, each line corresponding to a unique Gutenberg ID. This text corpus provides the necessary training material to teach GPT-2 the structure and language of poetry.
 
-### 3. ImageNet Dataset Integration
+### 3. Training Process
 
-Although the current implementation focuses on generating poetry based on textual descriptions, the next phase involves integrating ImageNet images to directly extract features from images and generate corresponding poetic text. This will be achieved through a vision transformer model to process the visual data and map it to poetic outputs.
+Data Preprocessing: The images are preprocessed by resizing and normalizing to match the input requirements of the Vision Transformer.
+
+Feature Extraction: The ViTFeatureExtractor transforms images into feature vectors, capturing visual details that inform the generated poem.
+
+Tokenization: The poetry dataset is tokenized using AutoTokenizer to convert captions into sequences that GPT-2 can process effectively, ensuring alignment with the model’s vocabulary.
+
+Model Training: The model is trained using Seq2SeqTrainer from Hugging Face. This manages the integration between the Vision Transformer’s visual inputs and GPT-2’s text-based outputs, generating poems based on the images. The training process dynamically adjusts weights to improve performance over multiple epochs, with real-time evaluation.
 
 ## Usage
-Poetry Generation from Text Description
+### Poetry Generation from Text Description
 
-To generate poetry based on a given description, you can call the generate_poetic_text() function with a seed description and the desired number of words.
+To generate poetry from a given image, preprocess the image using the ViTFeatureExtractor and feed it into the model, which will return a poetic description. Customize the number of words for the output.
+
+### Training the Model
+
+You can retrain the model by loading the datasets, preprocessing the images, and running the training script with Seq2SeqTrainer and Seq2SeqTrainingArguments.
+
+
